@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TOML Editor - OK Lab Flensburg</title>
+  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="../node_modules/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="../node_modules/codemirror/theme/material.css">
+</head>
+<body class="flex flex-col h-screen font-sans bg-gray-50">
+  <!-- Header -->
+  <header class="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white">
+    <h1 class="text-base font-semibold">TOML Editor</h1>
+    <div class="ml-auto flex gap-2">
+      <button id="btn-validate" class="bg-white text-gray-800 rounded-md px-3 py-1 text-sm">Validate</button>
+      <button id="btn-format" class="bg-white text-gray-800 rounded-md px-3 py-1 text-sm">Format</button>
+      <button id="btn-upload" class="bg-white text-gray-800 rounded-md px-3 py-1 text-sm">Render .toml</button>
+      <button id="btn-toggle-theme" class="bg-white text-gray-800 rounded-md px-3 py-1 text-sm">Theme</button>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <main class="flex-1 grid grid-cols-1 md:grid-cols-[1fr_580px] gap-3 p-3 min-h-0">
+    <!-- Editor card -->
+    <section class="flex flex-col rounded-lg overflow-hidden shadow-lg bg-white min-h-0">
+      <div class="flex items-center gap-2 px-3 py-2 bg-gray-100 flex-shrink-0">
+        <strong>Editor</strong>
+        <div id="status" class="text-sm text-gray-500 ml-auto">Ready</div>
+      </div>
+      <textarea id="editor" class="flex-1"></textarea>
+    </section>
+
+    <!-- Side panel -->
+    <aside class="flex flex-col bg-white rounded-lg shadow-lg p-3 overflow-hidden">
+      <h3 class="text-lg font-semibold mb-2">Preview / Tools</h3>
+      <div class="flex items-center justify-between mb-2">
+        <strong>Parsed JSON</strong>
+        <button id="btn-copy-json" class="text-sm px-2 py-1 bg-gray-200 rounded">Copy</button>
+      </div>
+      <pre id="preview" class="flex-1 bg-gray-50 p-2 rounded text-sm overflow-auto">(parsed output will appear here)</pre>
+      <hr class="my-2"/>
+      <h4 class="text-md font-semibold mb-1">Errors</h4>
+      <pre id="errors" class="flex-1 bg-gray-50 p-2 rounded text-sm overflow-auto">(no errors)</pre>
+    </aside>
+  </main>
+
+  <script type="module" src="./index.js"></script>
+</body>
+</html>

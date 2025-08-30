@@ -1,0 +1,22 @@
+{
+  "name": "toml-editor",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "parcel src/index.html --port 1234",
+    "build": "parcel build src/index.html --public-url ./"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "codemirror": "^5.65.20"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "buffer": "^6.0.3",
+    "events": "^3.3.0",
+    "parcel": "^2.15.4",
+    "postcss": "^8.5.6",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "tailwindcss": "^3.4.17"
+  }
+}
