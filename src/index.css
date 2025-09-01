@@ -4,5 +4,6 @@
 
 /* Extra: CodeMirror overrides */
 .CodeMirror {
+	font-size: large;
   height: 100% !important;
 }

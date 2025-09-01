@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TOML Generator - OK Lab Flensburg</title>
+  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="../node_modules/@simonwep/pickr/dist/themes/classic.min.css" />
+</head>
+
+<body class="flex flex-col h-screen font-sans bg-gray-50">
+  <form class="max-w-4xl mx-auto p-6 space-y-8" method="GET" action="#" id="editor-form">
+    <!-- Lage und Format -->
+    <div class="bg-white shadow-md rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Lage und Format</h2>
+
+      <!-- Bounding Box -->
+      <div>
+        <label for="bounding-box" class="block text-sm font-medium mb-2">Bounding Box</label>
+        <select id="bounding-box" class="p-2 w-full bg-white border-gray-300 border focus:ring-2 focus:ring-blue-500">
+          <option>Bitte auswählen</option>
+          <option id="schleswig-holstein">Schleswig Holstein</option>
+          <option id="flensburg">Flensburg</option>
+          <option id="berlin">Berlin</option>
+        </select>
+      </div>
+
+      <!-- Frei -->
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label for="lat-input" class="block text-sm font-medium mb-1">Lat</label>
+          <input id="lat-input" type="number" step="0.0001"
+            class="p-2 w-full border-gray-300 border focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label for="lon-input" class="block text-sm font-medium mb-1">Lon</label>
+          <input id="lon-input" type="number" step="0.0001"
+            class="p-2 w-full border-gray-300 border focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label for="km-input" class="block text-sm font-medium mb-1">km</label>
+          <input id="km-input" type="number"
+            class="p-2 w-full border-gray-300 border focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Aspect Ratio -->
+      <div>
+        <label class="block text-sm font-medium mb-2">Seitenverhältnis</label>
+        <label for="aspect-ratio-select" class="sr-only">Seitenverhältnis</label>
+        <select id="aspect-ratio-select"
+          class="p-2 w-full bg-white border-gray-300 border focus:ring-2 focus:ring-blue-500">
+          <option>Bitte auswählen</option>
+          <option id="quadratisch">Quadratisch</option>
+          <option id="16-9">16:9</option>
+          <option id="4-3">4:3</option>
+          <option id="3-2">3:2</option>
+        </select>
+      </div>
+
+      <!-- Hoch oder Quer -->
+      <div>
+        <label class="block text-sm font-medium mb-2">Ausrichtung</label>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2">
+            <input type="radio" name="orientation" value="hoch" class="text-blue-500 focus:ring-blue-500">
+            Hoch
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="radio" name="orientation" value="quer" class="text-blue-500 focus:ring-blue-500">
+            Quer
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Styling -->
+    <div class="bg-white shadow-md rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">🎨 Styling</h2>
+
+      <!-- Land -->
+      <div>
+        <label for="land-fill-color" class="block text-sm font-medium mb-2">Land - Füllfarbe</label>
+        <input id="land-fill-color" type="color" class="sr-only">
+        <input id="land-fill-color-picker" class="w-32 h-11 rounded-md border border-gray-300" />
+      </div>
+
+      <!-- Water -->
+      <div>
+        <label for="water-fill-color" class="block text-sm font-medium mb-2">Wasser - Füllfarbe</label>
+        <input id="water-fill-color" type="color" class="sr-only">
+        <input id="water-fill-color-picker" class="w-32 h-11 rounded-md border border-gray-300" />
+      </div>
+
+      <!-- Building -->
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label for="building-fill-color" class="block text-sm font-medium mb-1">Gebäude - Füllfarbe</label>
+          <input id="building-fill-color" type="color" class="sr-only">
+          <input id="building-fill-color-picker" class="w-full h-11 rounded-md border border-gray-300" />
+        </div>
+        <div>
+          <label for="building-stroke-color" class="block text-sm font-medium mb-1">Strichfarbe</label>
+          <input id="building-stroke-color" type="color" class="sr-only">
+          <input id="building-stroke-color-picker" class="w-full h-11 rounded-md border border-gray-300" />
+        </div>
+        <div>
+          <label for="building-stroke-width" class="block text-sm font-medium mb-1">Strichstärke (px)</label>
+          <input id="building-stroke-width" type="number"
+            class="p-2 w-full border-gray-300 border focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <!-- Street -->
+      <div>
+        <label for="street-color" class="block text-sm font-medium mb-2">Straßen - Farbe</label>
+        <input id="street-color" type="color" class="sr-only">
+        <input id="street-color-picker" class="w-32 h-11 rounded-md border border-gray-300" />
+      </div>
+    </div>
+
+    <!-- Selection -->
+    <div class="bg-white shadow-md rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">🛣 Auswahl</h2>
+      <div class="space-y-2">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="text-blue-500 focus:ring-blue-500"> Bundesstraße
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="text-blue-500 focus:ring-blue-500"> Landstraße
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="text-blue-500 focus:ring-blue-500"> Nebenstraße
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="text-blue-500 focus:ring-blue-500"> Kleine Landstraße
+        </label>
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="text-blue-500 focus:ring-blue-500"> Wohnstraße
+        </label>
+      </div>
+    </div>
+
+    <!-- CSV Upload -->
+    <div class="bg-white shadow-md rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">📄 CSV Upload</h2>
+      <label class="block">
+        <span class="sr-only">CSV Datei auswählen</span>
+        <input id="csv-upload" type="file" accept=".csv" class="block w-full text-sm text-gray-700
+                 file:mr-4 file:py-2 file:px-4 file:border-0
+                 file:text-sm file:font-semibold
+                 file:bg-blue-50 file:text-blue-700
+                 hover:file:bg-blue-100
+                 cursor-pointer" />
+        <span id="csv-upload-error" class="text-red-600 text-xs mt-2 hidden"></span>
+      </label>
+    </div>
+
+    <!-- Submit -->
+    <div class="text-right">
+      <button class="px-6 py-2 bg-blue-600 text-white shadow-md hover:bg-blue-700" type="submit">
+        Rendern
+      </button>
+    </div>
+  </form>
+  <script type="module">
+    import Pickr from '@simonwep/pickr'
+    document.getElementById('editor-form').addEventListener('submit', async function (e) {
+      e.preventDefault()
+      const form = e.target
+      const data = {}
+
+      // Bounding Box
+      const bbox = form.querySelector('#bounding-box')
+      data.boundingBox = bbox.value
+
+      // Lat, Lon, km
+      data.lat = form.querySelector('#lat-input').value
+      data.lon = form.querySelector('#lon-input').value
+      data.km = form.querySelector('#km-input').value
+
+      // Aspect ratio
+      data.aspectRatio = form.querySelector('#aspect-ratio-select').value
+
+      // Ausrichtung (radio)
+      const orientation = form.querySelector('input[name="orientation"]:checked')
+      data.orientation = orientation ? orientation.value : null
+
+      // Styling colors
+      data.landFillColor = form.querySelector('#land-fill-color').value
+      data.waterFillColor = form.querySelector('#water-fill-color').value
+      data.buildingFillColor = form.querySelector('#building-fill-color').value
+      data.buildingStrokeColor = form.querySelector('#building-stroke-color').value
+      data.buildingStrokeWidth = form.querySelector('#building-stroke-width').value
+      data.streetColor = form.querySelector('#street-color').value
+
+      // Selection (checkboxes)
+      const selectionLabels = [
+        "Bundesstraße",
+        "Landstraße",
+        "Nebenstraße",
+        "Kleine Landstraße",
+        "Wohnstraße"
+      ]
+      const selectionCheckboxes = form.querySelectorAll('.bg-white.shadow-md.rounded-2xl.p-6.space-y-6 input[type="checkbox"]')
+      data.selection = {}
+      selectionCheckboxes.forEach((cb, i) => {
+        data.selection[selectionLabels[i]] = cb.checked
+      })
+
+      // CSV file (optional, max 5MB)
+      const csvInput = document.getElementById('csv-upload')
+      const csvError = document.getElementById('csv-upload-error')
+      if (csvInput && csvInput.files.length > 0) {
+        const file = csvInput.files[0]
+        if (file.size > 5 * 1024 * 1024) { // 5MB
+          csvError.textContent = "Datei zu groß (max. 5MB erlaubt)."
+          csvError.classList.remove('hidden')
+          return
+        } else {
+          csvError.classList.add('hidden')
+        }
+        data.csvFileName = file.name
+        data.csvContent = await file.text()
+      } else {
+        if (csvError) csvError.classList.add('hidden')
+      }
+
+      console.log(JSON.stringify(data, null, 2))
+
+      // Post JSON to /generate
+      try {
+        const response = await fetch('https://api.renderer.oklabflensburg.de/toml/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+
+        const result = await response.json()
+        console.log(result)
+      } catch (err) {
+        console.error('Failed to post data to /generate:', err)
+      }
+    })
+
+    // Helper to sync Pickr with hidden input[type=color]
+    function setupColorPicker(pickerId, inputId, defaultColor = '#000000') {
+      const pickr = Pickr.create({
+        el: '#' + pickerId,
+        theme: 'classic',
+        default: document.getElementById(inputId).value || defaultColor,
+        swatches: [
+          '#F44336', '#E91E63', '#9C27B0', '#673AB7',
+          '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+          '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+          '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
+          '#795548', '#607D8B', '#000000', '#FFFFFF'
+        ],
+        components: {
+          preview: true,
+          opacity: true,
+          hue: true,
+          interaction: {
+            hex: true,
+            rgba: true,
+            input: true,
+            clear: true,
+            save: true
+          }
+        }
+      })
+      pickr.on('save', (color, instance) => {
+        const hex = color ? color.toHEXA().toString() : ''
+        document.getElementById(inputId).value = hex
+        pickr.hide()
+      })
+      pickr.on('change', (color, instance) => {
+        const hex = color ? color.toHEXA().toString() : ''
+        document.getElementById(inputId).value = hex
+      })
+      // Sync initial value
+      pickr.setColor(document.getElementById(inputId).value || defaultColor)
+    }
+
+    // Setup Pickr color pickers
+    setupColorPicker('land-fill-color-picker', 'land-fill-color', '#e5e5e5')
+    setupColorPicker('water-fill-color-picker', 'water-fill-color', '#b3d8f7')
+    setupColorPicker('building-fill-color-picker', 'building-fill-color', '#cccccc')
+    setupColorPicker('building-stroke-color-picker', 'building-stroke-color', '#888888')
+    setupColorPicker('street-color-picker', 'street-color', '#ffffff');
+  </script>
+</body>
+
+</html>
